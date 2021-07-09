@@ -1,10 +1,12 @@
-import 'package:fisioman/providers/clients.dart';
-import 'package:fisioman/providers/payments.dart';
-import 'package:fisioman/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import '../providers/clients.dart';
+import '../providers/payments.dart';
+import '../utils/app_routes.dart';
 import '../widgets/date_input.dart';
+import '../models/payments.dart';
+import '../models/enums/payment_frequency.dart';
 
 class PaymentConfirmFormArguments {
   final Payment payment;

@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/payments.dart';
+import '../models/clients.dart';
 import '../providers/clients.dart';
 import '../widgets/payment_client_item.dart';
 import '../utils/app_routes.dart';

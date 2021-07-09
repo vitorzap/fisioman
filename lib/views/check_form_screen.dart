@@ -1,8 +1,9 @@
-import 'package:fisioman/providers/payments.dart';
+import '../models/payments.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../providers/checks.dart';
+import '../models/checks.dart';
 import '../widgets/date_input.dart';
 
 class CheckFormScreen extends StatefulWidget {

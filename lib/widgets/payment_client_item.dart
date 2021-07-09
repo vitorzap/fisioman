@@ -1,13 +1,13 @@
-import 'package:fisioman/views/payment_confirm_form_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '../views/payment_confirm_form_screen.dart';
+import '../models/payments.dart';
 import '../providers/payments.dart';
 import '../utils/app_routes.dart';
 
 class ClientPaymentItem extends StatelessWidget {
   final Payment _payment;
-  final TextEditingController _payDateController = new TextEditingController();
 
   ClientPaymentItem(this._payment);
 

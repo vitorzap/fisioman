@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../providers/payments.dart';
+import '../models/payments.dart';
 import '../views/payment_confirm_form_screen.dart';
 import '../utils/app_routes.dart';
 

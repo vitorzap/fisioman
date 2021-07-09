@@ -1,10 +1,9 @@
-import 'package:fisioman/providers/checks.dart';
-import 'package:fisioman/views/check_withdraw_form_screen.dart';
-import 'package:fisioman/views/payment_confirm_form_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../providers/payments.dart';
+import '../providers/checks.dart';
+import '../views/check_withdraw_form_screen.dart';
+import '../models/checks.dart';
 import '../utils/app_routes.dart';
 
 class CheckPaymentItem extends StatelessWidget {

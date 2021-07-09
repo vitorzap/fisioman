@@ -1,9 +1,9 @@
-import '../providers/session_days.dart';
 import '../widgets/session_by_day_item.dart';
 import '../widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/session_by_day.dart';
+import '../models/enums/week_day.dart';
 
 class SessionDayScreen extends StatefulWidget {
   @override

@@ -1,24 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../models/payments.dart';
 import '../utils/db_utils.dart';
-
-class Payment {
-  final int id;
-  final int clientId;
-  final String name;
-  final DateTime expectedDate;
-  final DateTime effectiveDate;
-  final double amount;
-
-  Payment({
-    this.id,
-    this.clientId,
-    this.name,
-    this.expectedDate,
-    this.effectiveDate,
-    this.amount,
-  });
-}
 
 class Payments with ChangeNotifier {
   List<Payment> _items = [];

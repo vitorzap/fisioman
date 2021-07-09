@@ -1,41 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../utils/db_utils.dart';
-
-enum PaymentFrequency { Mensal, Trimestral, Eventual }
-
-final PaymentFrequencyList = [
-  DropdownMenuItem<PaymentFrequency>(
-      value: PaymentFrequency.Mensal, child: Text('Mensal')),
-  DropdownMenuItem<PaymentFrequency>(
-      value: PaymentFrequency.Trimestral, child: Text('Trimestral')),
-  DropdownMenuItem<PaymentFrequency>(
-      value: PaymentFrequency.Eventual, child: Text('Eventual'))
-];
-
-class Client {
-  final int id;
-  final String name;
-  final String email;
-  final String telephone;
-  final String address;
-  final DateTime birthDate;
-  final DateTime startDate;
-  final File photoFile;
-  final PaymentFrequency paymentFrequency;
-
-  Client({
-    this.id,
-    this.name,
-    this.email,
-    this.telephone,
-    this.address,
-    this.birthDate,
-    this.startDate,
-    this.photoFile,
-    this.paymentFrequency,
-  });
-}
+import '../models/clients.dart';
+import '../models/enums/payment_frequency.dart';
 
 class Clients with ChangeNotifier {
   List<Client> _items = [];

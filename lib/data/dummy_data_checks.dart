@@ -1,4 +1,4 @@
-import '../providers/checks.dart';
+import '../models/checks.dart';
 
 final DUMMY_CHECKS = [
   Check(

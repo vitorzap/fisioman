@@ -1,13 +1,18 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:fisioman/providers/session_days.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import '../models/clients.dart';
 import '../providers/clients.dart';
+import '../models/enums/payment_frequency.dart';
 import '../widgets/date_input.dart';
 import '../widgets/image_input.dart';
+import '../models/session_days.dart';
+import '../models/enums/week_day.dart';
+import '../models/enums/hour_day.dart';
+import '../providers/session_days.dart';
 
 class ClientFormScreen extends StatefulWidget {
   @override

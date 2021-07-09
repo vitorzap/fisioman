@@ -1,6 +1,7 @@
 import 'package:fisioman/providers/session_days.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/clients.dart';
 import '../providers/clients.dart';
 import '../utils/app_routes.dart';
 

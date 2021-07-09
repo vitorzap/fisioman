@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../providers/checks.dart';
+import '../models/checks.dart';
 import '../views/check_withdraw_form_screen.dart';
 import '../utils/app_routes.dart';
 

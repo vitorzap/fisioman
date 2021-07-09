@@ -1,8 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/payments.dart';
-import '../widgets/payment_client_item.dart';
+import '../models/payments.dart';
 import '../utils/app_routes.dart';
 import '../providers/checks.dart';
 import '../widgets/check_payment_item.dart';

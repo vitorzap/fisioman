@@ -1,5 +1,5 @@
-import '../providers/clients.dart';
-import '../providers/session_days.dart';
+import '../models/clients.dart';
+import '../models/enums/payment_frequency.dart';
 
 final DUMMY_CLIENTS = [
   Client(

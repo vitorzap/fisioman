@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../providers/session_by_day.dart';
+import '../models/session_by_day.dart';
 
 class SessionByDayItem extends StatelessWidget {
   final SessionByDay sessionByDay;

@@ -1,4 +1,7 @@
 import '../providers/session_days.dart';
+import '../models/session_days.dart';
+import '../models/enums/week_day.dart';
+import '../models/enums/hour_day.dart';
 
 final DUMMY_SDAYS = [
   SessionDay(

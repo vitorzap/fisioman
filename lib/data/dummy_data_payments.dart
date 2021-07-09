@@ -1,4 +1,4 @@
-import 'package:fisioman/providers/payments.dart';
+import '../models/payments.dart';
 
 final DUMMY_PAGTOS = [
   Payment(
