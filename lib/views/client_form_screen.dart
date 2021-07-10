@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:fisioman/widgets/client_session_day_subform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -30,17 +31,13 @@ class _ClientFormScreenState extends State<ClientFormScreen> {
   final _form = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
   bool _isLoading = false;
-  bool _showAddSessionDay = false;
   TextEditingController _birthDateController = new TextEditingController();
   TextEditingController _startDateController = new TextEditingController();
   File _pickedImage;
 
   var _sessionDaysProvider;
-  List<SessionDay> _wSessionDays;
 
   var _selectedPaymentFrequency;
-  var _selectedSessionDay;
-  var _selectedSessionHour;
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
@@ -69,22 +66,11 @@ class _ClientFormScreenState extends State<ClientFormScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _wSessionDays = [];
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_formData.isEmpty) {
       final client = ModalRoute.of(context).settings.arguments as Client;
       if (client != null) {
-        _sessionDaysProvider = Provider.of<SessionDays>(context);
-        _wSessionDays = _sessionDaysProvider.items
-            .where((item) => item.clientId == client.id)
-            .toList();
-
         _formData['id'] = client.id;
         _formData['name'] = client.name;
         _formData['email'] = client.email;
@@ -363,122 +349,7 @@ class _ClientFormScreenState extends State<ClientFormScreen> {
                       },
                     ),
                     if (_formData['id'] != null)
-                      SizedBox(
-                        height: 10,
-                      ),
-                    if (_formData['id'] != null)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      _showAddSessionDay = !_showAddSessionDay;
-                                    });
-                                  },
-                                  child: Icon(!_showAddSessionDay
-                                      ? Icons.expand_more
-                                      : Icons.expand_less),
-                                ),
-                                Text(
-                                  '  Dias de aula',
-                                  style: TextStyle(
-                                    fontSize: _wSessionDays != null &&
-                                            _wSessionDays.length != 0
-                                        ? 12
-                                        : 16,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            if (_showAddSessionDay)
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  DropdownButton<WeekDay>(
-                                    menuMaxHeight: 200,
-                                    value: _selectedSessionDay,
-                                    items: WeekDayList,
-                                    hint: Text('Dia da Semana'),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSessionDay = value;
-                                      });
-                                    },
-                                  ),
-                                  DropdownButton<HourDay>(
-                                    menuMaxHeight: 200,
-                                    value: _selectedSessionHour,
-                                    items: HourDayList,
-                                    hint: Text('Hora do Dia'),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _selectedSessionHour = value;
-                                      });
-                                    },
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      if (_selectedSessionDay != null &&
-                                          _selectedSessionHour != null) {
-                                        final newSessionDay = SessionDay(
-                                          id: Random().nextInt(5),
-                                          clientId: _formData['id'],
-                                          day: _selectedSessionDay,
-                                          hour: _selectedSessionHour,
-                                        );
-                                        _sessionDaysProvider
-                                            .addSessionDay(newSessionDay);
-                                        setState(() {
-                                          _wSessionDays.add(newSessionDay);
-                                          _wSessionDays.sort((a, b) => a
-                                              .day.index
-                                              .compareTo(b.day.index));
-                                          _showAddSessionDay = false;
-                                        });
-                                      }
-                                    },
-                                    child: Icon(Icons.add_circle),
-                                  ),
-                                ],
-                              )
-                          ],
-                        ),
-                      ),
-                    if (_formData['id'] != null)
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(12, 0, 12, 8),
-                        child: Column(
-                          children: _wSessionDays.asMap().entries.map((item) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  ' ${item.key + 1} - ${item.value.dayText}  à(s) ${item.value.hour.toString().substring(item.value.hour.toString().indexOf("h") + 1).replaceAll("m", ":")} hora(s)',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.grey[900]),
-                                ),
-                                Expanded(child: Divider(height: 20)),
-                                InkWell(
-                                  onTap: () {
-                                    _sessionDaysProvider
-                                        .deleteSessionDay(item.value.id);
-                                    setState(() {
-                                      _wSessionDays.remove(item.value);
-                                    });
-                                  },
-                                  child: Icon(Icons.delete),
-                                ),
-                              ],
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                      ClientSessionDaySubform(_formData['id']),
                   ],
                 ),
               ),
