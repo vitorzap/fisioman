@@ -1,4 +1,4 @@
-package com.example.fisioman
+package br.com.zapv.fisioman
 
 import io.flutter.embedding.android.FlutterActivity
 
