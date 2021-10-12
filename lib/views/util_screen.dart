@@ -34,9 +34,9 @@ class UtilScreen extends StatelessWidget {
                       "SELECT * FROM sqlite_master WHERE name ='sessiondays' and type='table'");
                   if (rowList.length == 0) {
                     DbUtil.createTableSessionDays();
-                    msg = msg + "Tabela AULAS criada \n";
+                    msg = msg + "Tabela SESSÕES FIXAS criada \n";
                   } else {
-                    msg = msg + "Tabala AULAS já existe \n";
+                    msg = msg + "Tabala SESSÕES FIXAS já existe \n";
                   }
                   rowList = await DbUtil.rawQuery(
                       "SELECT * FROM sqlite_master WHERE name ='payments' and type='table'");
@@ -53,6 +53,14 @@ class UtilScreen extends StatelessWidget {
                     msg = msg + "Tabela CHEQUES criada \n";
                   } else {
                     msg = msg + "Tabala CHEQUES já existe \n";
+                  }
+                  rowList = await DbUtil.rawQuery(
+                      "SELECT * FROM sqlite_master WHERE name ='sessions' and type='table'");
+                  if (rowList.length == 0) {
+                    DbUtil.createTableSessions();
+                    msg = msg + "Tabela SESSÕES criada \n";
+                  } else {
+                    msg = msg + "Tabala SESSÕES já existe \n";
                   }
 
                   showDialog(

@@ -1,23 +1,26 @@
+import 'package:fisioman/models/enums/payment_status.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/payments.dart';
+import '../providers/sessions.dart';
 import '../models/clients.dart';
-import '../widgets/payment_client_item.dart';
+import '../widgets/session_client_item.dart';
 import '../utils/app_routes.dart';
+import '../views/session_schedule_form_screen.dart';
 
-class ClientPaymentScreen extends StatefulWidget {
+class ClientSessionScreen extends StatefulWidget {
   @override
-  _ClientPaymentScreenState createState() => _ClientPaymentScreenState();
+  _ClientSessionScreenState createState() => _ClientSessionScreenState();
 }
 
-class _ClientPaymentScreenState extends State<ClientPaymentScreen> {
+class _ClientSessionScreenState extends State<ClientSessionScreen> {
+  // bool _isLoading = true;
   bool _isLoading = false;
   Client _client;
 
-  _getPayments(Client client) async {
-    Provider.of<Payments>(context, listen: false)
-        .loadPaymentsByClient(client.id)
+  _getSessions(Client client) async {
+    Provider.of<Sessions>(context, listen: false)
+        .loadSessionsByClient(client.id)
         .then((_) {
       setState(() {
         _isLoading = false;
@@ -32,7 +35,7 @@ class _ClientPaymentScreenState extends State<ClientPaymentScreen> {
       setState(() {
         _client = ModalRoute.of(context).settings.arguments as Client;
       });
-      _getPayments(_client);
+      _getSessions(_client);
     });
   }
 
@@ -43,19 +46,41 @@ class _ClientPaymentScreenState extends State<ClientPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final clientPayments = Provider.of<Payments>(context);
+    final clientSessions = Provider.of<Sessions>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pagamentos do Cliente'),
+        title: Text('Sessões do Cliente'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).pushNamed(
-                AppRoutes.PAYMENT_FORM_SCREEN,
+                AppRoutes.SESSION_FORM_SCREEN,
                 arguments: _client,
               );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.payment),
+            onPressed: () {
+              var sessioDatelist = clientSessions.items
+                  .where((session) => session.paid == PaymentStatus.ToSchedule)
+                  .map((session) =>
+                      DateFormat('dd/MM/yyyy hh:mm').format(session.dateTime))
+                  .toList();
+              if (sessioDatelist.length == 0) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text('Nenhuma sessão selecionada'),
+                  duration: Duration(seconds: 1),
+                ));
+              } else {
+                sessioDatelist.sort();
+                Navigator.of(context).pushNamed(
+                  AppRoutes.SESSION_SCHEDULE_FORM_SCREEN,
+                  arguments: SessionScheduleArguments(_client, sessioDatelist),
+                );
+              }
             },
           ),
         ],
@@ -88,18 +113,18 @@ class _ClientPaymentScreenState extends State<ClientPaymentScreen> {
                                   "Data de início: ${DateFormat('dd/MM/yyyy').format(_client.startDate)}"),
                     ),
                   ),
-                  clientPayments.itemsCount == 0
+                  clientSessions.itemsCount == 0
                       ? Expanded(
                           child: Center(
-                            child: Text("Nenhum pagamento cadastrado"),
+                            child: Text("Nenhuma sessão cadastrada"),
                           ),
                         )
                       : Expanded(
                           child: ListView.builder(
-                            itemCount: clientPayments.itemsCount,
+                            itemCount: clientSessions.itemsCount,
                             itemBuilder: (ctx, index) => Column(
                               children: <Widget>[
-                                ClientPaymentItem(clientPayments.items[index]),
+                                ClientSessionItem(clientSessions.items[index]),
                                 Divider(),
                               ],
                             ),

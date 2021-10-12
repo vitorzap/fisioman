@@ -52,7 +52,7 @@ class _SessionDayScreenState extends State<SessionDayScreen> {
     final sessionsbyday = Provider.of<SessionsByDay>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Aulas do dia'),
+        title: Text('Sessões fixas por dia da semana'),
         // actions: <Widget>[
         //   IconButton(
         //     icon: const Icon(Icons.add),

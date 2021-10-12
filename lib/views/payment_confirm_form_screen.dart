@@ -41,8 +41,9 @@ class _PaymentConfirmFormScreenState extends State<PaymentConfirmFormScreen> {
   _selectDate(BuildContext context, TextEditingController controller) async {
     var _pickedDate = await showDatePicker(
       context: context,
+      locale: const Locale('pt', 'BR'),
       initialDate: DateTime.now(),
-      firstDate: DateTime(1919),
+      firstDate: DateTime.now().subtract(Duration(days: 365)),
       lastDate: DateTime.now(),
     );
 

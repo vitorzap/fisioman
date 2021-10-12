@@ -31,9 +31,10 @@ class _CheckFormScreenState extends State<CheckFormScreen> {
   _selectDate(BuildContext context, TextEditingController controller) async {
     var _pickedDate = await showDatePicker(
       context: context,
+      locale: const Locale('pt', 'BR'),
       initialDate: DateTime.now(),
-      firstDate: DateTime(1919),
-      lastDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
     );
 
     if (_pickedDate != null) {

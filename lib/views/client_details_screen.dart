@@ -77,7 +77,7 @@ class ClientDetailsScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(12, 8, 12, 0),
                     child: Text(
-                      'Dias de aula:',
+                      'Dias de sessão:',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[850],

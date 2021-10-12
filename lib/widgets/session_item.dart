@@ -1,61 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../views/payment_confirm_form_screen.dart';
-import '../models/payments.dart';
-import '../providers/payments.dart';
-import '../utils/app_routes.dart';
+import '../models/sessions.dart';
+import '../providers/sessions.dart';
+import '../models/enums/payment_status.dart';
 
-class ClientPaymentItem extends StatelessWidget {
-  final Payment _payment;
+class SessionItem extends StatelessWidget {
+  final Session _session;
 
-  ClientPaymentItem(this._payment);
+  SessionItem(this._session);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: _payment.effectiveDate == null &&
-              _payment.expectedDate.isBefore(DateTime.now())
-          ? Text(
-              DateFormat('dd/MM/yyyy').format(_payment.expectedDate),
-              style:
-                  TextStyle(fontSize: 20, color: Theme.of(context).errorColor),
-            )
-          : Text(DateFormat('dd/MM/yyyy').format(_payment.expectedDate),
-              style: TextStyle(fontSize: 18)),
-      title: Text(
-        NumberFormat("##,##0.00", "pt_BR").format(_payment.amount),
-      ),
-      subtitle: _payment.effectiveDate == null
-          ? Text('em Aberto',
-              style: TextStyle(color: Theme.of(context).errorColor))
-          : Text(
-              "Pago: ${DateFormat('dd/MM/yyyy').format(_payment.effectiveDate)}",
-              style: TextStyle(fontSize: 12),
-            ),
+      leading: Text(DateFormat('hh:mm').format(_session.dateTime),
+          style: TextStyle(fontSize: 18)),
+      title: Text(_session.name),
+      subtitle: _session.effected
+          ? Text(paymentStatusToText(_session.paid),
+              style: TextStyle(fontSize: 14))
+          : Text('Prevista'),
       trailing: Container(
-        width: 150,
+        width: 100,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             IconButton(
               icon: Icon(
-                _payment.effectiveDate == null ? Icons.check_box : Icons.cancel,
+                _session.effected ? Icons.cancel : Icons.check_box,
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
-                if (_payment.effectiveDate == null) {
-                  Navigator.of(context).pushNamed(
-                    AppRoutes.PAYMENT_CONFIRM_FORM_SCREEN,
-                    arguments: PaymentConfirmFormArguments(
-                        _payment, AppRoutes.CLIENT_PAYMENT_SCREEN),
-                  );
-                } else {
+                if (_session.paymentId == null || _session.paymentId == 0) {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: Text('Cancelar Pagamento'),
-                      content: Text('Confirmar o cancelamento ?'),
+                      title: !_session.effected
+                          ? Text('Informar Execução')
+                          : Text('Cancelar Execução'),
+                      content: !_session.effected
+                          ? Text('Confirma a Execução ?')
+                          : Text('Confirmar o cancelamento ?'),
                       actions: <Widget>[
                         TextButton(
                           child: Text('Sim'),
@@ -70,26 +55,33 @@ class ClientPaymentItem extends StatelessWidget {
                   ).then(
                     (value) async {
                       if (value) {
-                        Provider.of<Payments>(context, listen: false)
-                            .updateDateEffective(_payment.id, null);
+                        Provider.of<Sessions>(context, listen: false)
+                            .updateStatus(
+                                _session.id, !_session.effected, _session.paid);
                       }
                     },
                   );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        'Sessão incluida em pagamento não pode ter sua execução cancelada'),
+                    duration: Duration(seconds: 1),
+                  ));
                 }
               },
             ),
             IconButton(
               icon: Icon(
-                _payment.effectiveDate == null ? Icons.delete : Icons.payment,
+                Icons.delete,
                 color: Theme.of(context).primaryColor,
               ),
               onPressed: () {
-                if (_payment.effectiveDate == null) {
+                if (_session.paymentId == null || _session.paymentId == 0) {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
                       title: Text('Confirme a exclusão'),
-                      content: Text('Excluir o pagamento ?'),
+                      content: Text('Excluir o sessão ?'),
                       actions: <Widget>[
                         TextButton(
                           child: Text('Sim'),
@@ -104,16 +96,17 @@ class ClientPaymentItem extends StatelessWidget {
                   ).then(
                     (value) async {
                       if (value) {
-                        Provider.of<Payments>(context, listen: false)
-                            .deletePayment(_payment.id);
+                        Provider.of<Sessions>(context, listen: false)
+                            .deleteSession(_session.id);
                       }
                     },
                   );
                 } else {
-                  Navigator.of(context).pushNamed(
-                    AppRoutes.PAYMENT_CHECK_SCREEN,
-                    arguments: _payment,
-                  );
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        'Sessão incluida em pagamento não pode ser excluída'),
+                    duration: Duration(seconds: 1),
+                  ));
                 }
               },
             ),

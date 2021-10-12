@@ -21,10 +21,34 @@ class AppDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.calendar_today_sharp),
-            title: Text('Aulas'),
+            title: Text('Sessões fixas por dia da semana'),
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(AppRoutes.SESSION_DAY_SCREEN);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.calendar_today),
+            title: Text('Sessões por dia'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.SESSION_SCREEN);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.list_alt_outlined),
+            title: Text('Gerar sessões por dia a partir de sessões fixas'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.SESSION_GENERATE_FORM_SCREEN);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.delete_outlined),
+            title: Text('Excluir últimas sessões geradas'),
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(AppRoutes.SESSION_DELETE_FORM_SCREEN);
             },
           ),
           ListTile(

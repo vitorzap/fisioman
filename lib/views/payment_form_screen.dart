@@ -30,9 +30,10 @@ class _PaymentFormScreenState extends State<PaymentFormScreen> {
   _selectDate(BuildContext context, TextEditingController controller) async {
     var _pickedDate = await showDatePicker(
       context: context,
+      locale: const Locale('pt', 'BR'),
       initialDate: DateTime.now(),
-      firstDate: DateTime(1919),
-      lastDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
     );
 
     if (_pickedDate != null) {
@@ -162,6 +163,7 @@ class _PaymentFormScreenState extends State<PaymentFormScreen> {
                       decoration: InputDecoration(
                         labelText: 'Valor',
                         hintText: 'Entre o valor',
+                        prefixIcon: Icon(Icons.attach_money),
                       ),
                       textInputAction: TextInputAction.next,
                       keyboardType:

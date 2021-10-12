@@ -5,7 +5,8 @@ class GUIDGen {
     Random random = new Random(new DateTime.now().millisecond);
 
     final String hexDigits = "0123456789abcdef";
-    final List<String> uuid = new List<String>(36);
+    // final List<String> uuid = new List<String>(36);
+    final List<String> uuid = List.filled(36, ' ');
 
     for (int i = 0; i < 36; i++) {
       final int hexPos = random.nextInt(16);

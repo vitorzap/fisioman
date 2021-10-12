@@ -1,6 +1,5 @@
 import 'dart:io';
 import './enums/payment_frequency.dart';
-import 'package:flutter/material.dart';
 
 class Client {
   final int id;

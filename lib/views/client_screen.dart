@@ -1,5 +1,4 @@
 import 'package:fisioman/providers/session_days.dart';
-import 'package:fisioman/utils/db_utils.dart';
 import '../widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +34,9 @@ class _ClientScreenState extends State<ClientScreen> {
     // DbUtil.AlterTableClients();
     // DbUtil.createTableSessionDays();
     // DbUtil.createTablePayments();
+    // DbUtil.createTableSessions();
+    // DbUtil.alterTableSessions();
+
     Provider.of<Clients>(context, listen: false).loadClients('').then((_) {
       Provider.of<SessionDays>(context, listen: false)
           .loadSessionDays()

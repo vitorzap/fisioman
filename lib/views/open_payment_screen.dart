@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../providers/payments.dart';
 import '../widgets/open_payment_item.dart';
 import '../widgets/app_drawer.dart';
-import '../utils/app_routes.dart';
 
 class OpenPaymentScreen extends StatefulWidget {
   @override

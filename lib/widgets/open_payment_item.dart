@@ -6,7 +6,6 @@ import '../utils/app_routes.dart';
 
 class OpenPaymentItem extends StatelessWidget {
   final Payment _payment;
-  final TextEditingController _payDateController = new TextEditingController();
 
   OpenPaymentItem(this._payment);
 

@@ -1,4 +1,3 @@
-import 'package:fisioman/data/dummy_data_session_days.dart';
 import 'package:flutter/material.dart';
 import '../utils/db_utils.dart';
 import '../models/enums/week_day.dart';

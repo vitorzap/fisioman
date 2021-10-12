@@ -62,7 +62,7 @@ class _ClientSessionDaySubformState extends State<ClientSessionDaySubform> {
                         : Icons.expand_less),
                   ),
                   Text(
-                    '  Dias de aula',
+                    '  Dias de sessão',
                     style: TextStyle(
                       fontSize:
                           _wSessionDays != null && _wSessionDays.length != 0

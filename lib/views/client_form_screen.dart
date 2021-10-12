@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:fisioman/widgets/client_session_day_subform.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +9,6 @@ import '../providers/clients.dart';
 import '../models/enums/payment_frequency.dart';
 import '../widgets/date_input.dart';
 import '../widgets/image_input.dart';
-import '../models/session_days.dart';
-import '../models/enums/week_day.dart';
-import '../models/enums/hour_day.dart';
-import '../providers/session_days.dart';
 
 class ClientFormScreen extends StatefulWidget {
   @override
@@ -35,8 +30,6 @@ class _ClientFormScreenState extends State<ClientFormScreen> {
   TextEditingController _startDateController = new TextEditingController();
   File _pickedImage;
 
-  var _sessionDaysProvider;
-
   var _selectedPaymentFrequency;
 
   void _selectImage(File pickedImage) {
@@ -53,6 +46,7 @@ class _ClientFormScreenState extends State<ClientFormScreen> {
   _selectDate(BuildContext context, TextEditingController controller) async {
     var _pickedDate = await showDatePicker(
       context: context,
+      locale: const Locale('pt', 'BR'),
       initialDate: DateTime.now(),
       firstDate: DateTime(1919),
       lastDate: DateTime.now(),
@@ -313,6 +307,9 @@ class _ClientFormScreenState extends State<ClientFormScreen> {
                             return 'Data não válida';
                           }
                         }
+                        // } else {
+                        //   return 'Informe uma Data de Início';
+                        // }
                         return null;
                       },
                     ),

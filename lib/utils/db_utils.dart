@@ -38,6 +38,15 @@ class DbUtil {
             'value REAL ' +
             ')');
 
+        db.execute('CREATE TABLE IF NOT EXISTS sessions (' +
+            'id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+            'clientId INTEGER, ' +
+            'dateTime TEXT, ' +
+            'effected INTEGER, ' +
+            'paid INTEGER ' +
+            'paymentId INTEGER ' +
+            ')');
+
         return db.execute('CREATE TABLE sessiondays (' +
             'id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
             'clientId INTEGER, ' +
@@ -97,14 +106,36 @@ class DbUtil {
         ')');
   }
 
+  static Future<void> createTableSessions() async {
+    final db = await DbUtil.database();
+    return db.execute('CREATE TABLE IF NOT EXISTS sessions (' +
+        'id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
+        'clientId INTEGER, ' +
+        'dateTime TEXT, ' +
+        'effected INTEGER, ' +
+        'paid INTEGER ' +
+        'paymentId INTEGER ' +
+        'idAuto INTEGER ' +
+        ')');
+  }
+
   static Future<void> alterTableClients() async {
     final db = await DbUtil.database();
     return db.execute('ALTER TABLE clients ADD paymentFrequency INTEGER');
   }
 
+  static Future<void> alterTableSessions() async {
+    final db = await DbUtil.database();
+    return db.execute('ALTER TABLE sessions ADD idAuto INTEGER');
+  }
+
   static Future<void> deleteTable(String table) async {
     final db = await DbUtil.database();
     return db.execute('DROP TABLE IF EXISTS $table');
+  }
+
+  static Future<sql.Database> getDB() async {
+    return await DbUtil.database();
   }
 
   static Future<int> insert(String table, Map<String, Object> data) async {
@@ -155,8 +186,20 @@ class DbUtil {
     return db.query(table, orderBy: orderField);
   }
 
+  static Future<List<Map<String, dynamic>>> getDataByGenericField(
+      String table, String searchField, String value, String orderField) async {
+    final db = await DbUtil.database();
+    return db.query(table,
+        where: searchField, whereArgs: ['$value'], orderBy: orderField);
+  }
+
   static Future<List<Map<String, dynamic>>> rawQuery(String query) async {
     final db = await DbUtil.database();
     return await db.rawQuery(query);
+  }
+
+  static Future<int> rawDelete(String query) async {
+    final db = await DbUtil.database();
+    return await db.rawDelete(query);
   }
 }

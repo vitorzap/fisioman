@@ -8,8 +8,6 @@ import '../utils/app_routes.dart';
 
 class CheckPaymentItem extends StatelessWidget {
   final Check _check;
-  final TextEditingController _checkDateController =
-      new TextEditingController();
 
   CheckPaymentItem(this._check);
 

@@ -1,4 +1,3 @@
-import 'package:fisioman/data/dummy_data_session_days.dart';
 import 'package:flutter/material.dart';
 
 enum HourDay {
@@ -86,3 +85,7 @@ final HourDayList = [
   DropdownMenuItem<HourDay>(value: HourDay.h23m00, child: Text('23:00')),
   DropdownMenuItem<HourDay>(value: HourDay.h23m30, child: Text('23:30')),
 ];
+
+String formatedHour(String sHour) {
+  return '${sHour.substring(sHour.indexOf("h") + 1).replaceAll("m", ":")}';
+}

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../models/clients.dart';
 import '../providers/clients.dart';
 import '../utils/app_routes.dart';
+import '../utils/constants.dart';
 
 class ClientItem extends StatelessWidget {
   final Client client;
@@ -15,6 +16,19 @@ class ClientItem extends StatelessWidget {
       AppRoutes.CLIENT_DETAILS,
       arguments: client,
     );
+  }
+
+  void handleMenuChoice(BuildContext context, String value, Client client) {
+    switch (value) {
+      case Constants.PAYMENTS:
+        Navigator.of(context)
+            .pushNamed(AppRoutes.CLIENT_PAYMENT_SCREEN, arguments: client);
+        break;
+      case Constants.SESSIONS:
+        Navigator.of(context)
+            .pushNamed(AppRoutes.CLIENT_SESSION_SCREEN, arguments: client);
+        break;
+    }
   }
 
   @override
@@ -75,16 +89,27 @@ class ClientItem extends StatelessWidget {
                 );
               },
             ),
-            IconButton(
-              icon: Icon(Icons.monetization_on_sharp),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  AppRoutes.CLIENT_PAYMENT_SCREEN,
-                  arguments: client,
-                );
+            PopupMenuButton<String>(
+              onSelected: (choice) => handleMenuChoice(context, choice, client),
+              itemBuilder: (BuildContext context) {
+                return Constants.CLIENT_SCREEN_OPTIONS.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
               },
             ),
+            // IconButton(
+            //   icon: Icon(Icons.monetization_on_sharp),
+            //   color: Theme.of(context).primaryColor,
+            //   onPressed: () {
+            //     Navigator.of(context).pushNamed(
+            //       AppRoutes.CLIENT_PAYMENT_SCREEN,
+            //       arguments: client,
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),

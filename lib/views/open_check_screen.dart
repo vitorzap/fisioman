@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../providers/checks.dart';
 import '../widgets/open_check_item.dart';
 import '../widgets/app_drawer.dart';
-import '../utils/app_routes.dart';
 
 class OpenCheckScreen extends StatefulWidget {
   @override

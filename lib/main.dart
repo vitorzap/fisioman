@@ -1,3 +1,6 @@
+import 'package:fisioman/views/session_delete_form_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'views/open_payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +10,7 @@ import './providers/session_days.dart';
 import './providers/session_by_day.dart';
 import './providers/payments.dart';
 import './providers/checks.dart';
+import './providers/sessions.dart';
 import './utils/app_routes.dart';
 import './views/client_form_screen.dart';
 import './views/client_details_screen.dart';
@@ -18,6 +22,11 @@ import './views/check_payment_screen.dart';
 import './views/check_form_screen.dart';
 import './views/check_withdraw_form_screen.dart';
 import './views/open_check_screen.dart';
+import './views/session_client_screen.dart';
+import './views/session_form_screen.dart';
+import './views/session_schedule_form_screen.dart';
+import './views/session_generate_form_screen.dart';
+import './views/session_screen.dart';
 import './views/util_screen.dart';
 
 void main() {
@@ -45,8 +54,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => new Checks(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => new Sessions(),
+        ),
       ],
       child: MaterialApp(
+          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+          supportedLocales: [const Locale('en'), const Locale('pt')],
           title: 'FisioMan',
           theme: ThemeData(
             primarySwatch: Colors.purple,
@@ -68,6 +82,15 @@ class MyApp extends StatelessWidget {
             AppRoutes.CHECK_WITHDRAW_FORM_SCREEN: (ctx) =>
                 CheckWithdrawFormScreen(),
             AppRoutes.OPEN_CHECK_SCREEN: (ctx) => OpenCheckScreen(),
+            AppRoutes.CLIENT_SESSION_SCREEN: (ctx) => ClientSessionScreen(),
+            AppRoutes.SESSION_FORM_SCREEN: (ctx) => SessionFormScreen(),
+            AppRoutes.SESSION_SCHEDULE_FORM_SCREEN: (ctx) =>
+                SessionScheduleFormScreen(),
+            AppRoutes.SESSION_GENERATE_FORM_SCREEN: (ctx) =>
+                SessionGenerateFormScreen(),
+            AppRoutes.SESSION_DELETE_FORM_SCREEN: (ctx) =>
+                SessionDeleteFormScreen(),
+            AppRoutes.SESSION_SCREEN: (ctx) => SessionScreen(),
             AppRoutes.UTILIDADES: (ctx) => UtilScreen()
           }),
     );
